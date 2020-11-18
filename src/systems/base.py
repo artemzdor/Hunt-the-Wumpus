@@ -1,10 +1,12 @@
+from typing import TYPE_CHECKING
 from abc import ABC, abstractmethod
 
-from src.core.scene import Scene
+if TYPE_CHECKING:
+    from src.core.scene import Scene
 
 
 class System(ABC):
 
     @abstractmethod
-    def process(self, scene: Scene):
+    def process(self, scene: "Scene"):
         pass
