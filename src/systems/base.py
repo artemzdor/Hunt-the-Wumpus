@@ -10,3 +10,6 @@ class System(ABC):
     @abstractmethod
     def process(self, scene: "Scene"):
         pass
+
+    def event(self, scene: "Scene"):
+        pass

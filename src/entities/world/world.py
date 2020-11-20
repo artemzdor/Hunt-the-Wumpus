@@ -38,4 +38,4 @@ def new_world(width: int, height: int) -> Entity:
 
 if __name__ == '__main__':
     n = new_world(5, 5)
-    pprint(n.components[ComponentCoordinates].word[0][0])
+    pprint(n.components[ComponentCoordinates].word)
