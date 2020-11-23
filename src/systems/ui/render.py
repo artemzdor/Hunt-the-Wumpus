@@ -11,4 +11,5 @@ class SystemRender(System):
     def render(
         self, scene: Scene, render_entity_id: UUID
     ) -> List[ComponentDialogEvent]:
+        """Метод создания ComponentDialogEvent"""
         return []

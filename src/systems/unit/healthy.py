@@ -15,7 +15,7 @@ class SystemUnitHealthy(System):
         pass
 
     def _add_healthy(self, component: ComponentUnitHealthy, healthy: int) -> None:
-        """Логика добовления жизней"""
+        """Добовление жизней"""
         component.healthy += healthy
 
         healthy_max: int = component.healthy_max
@@ -25,7 +25,7 @@ class SystemUnitHealthy(System):
 
     def _deprive_healthy(self, component_healthy: ComponentUnitHealthy,
                          component_game_status: Component, healthy: int) -> None:
-        """Логика отнять жизни, убить юнита"""
+        """Отнятие жизней, убить юнита"""
         if component_healthy.healthy <= healthy:
             if component_healthy.revival > 1:
                 component_healthy.revival -= 1

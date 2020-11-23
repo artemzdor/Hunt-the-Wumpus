@@ -18,12 +18,14 @@ class SystemInput(System):
             self, system: Optional[System], component: Optional[Component], value: Any,
             scene: Scene, value_name: str, kwargs: Dict[str, Any], event_type: str = "input"
     ) -> bool:
+        """Передача события системе"""
         if system is None:
             return False
         system.event(scene=scene, system_event=system, component=component,
                      value=value, value_name=value_name, kwargs=kwargs, event_type=event_type)
 
     def display_input(self, scene: Scene, component_dialog: ComponentDialog) -> bool:
+        """Получени ввода"""
         input_text: str = input("Введите вариант: ").strip()
 
         events: List[ComponentDialogEvent]

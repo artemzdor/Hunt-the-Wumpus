@@ -14,18 +14,22 @@ class Entity:
     tags: List[str] = field(default_factory=list, metadata="Теги")
 
     def get_component(self, component: Type[Component]) -> Optional[Component]:
+        """Получение компонента"""
         return self.components.get(component)
 
     def get_uuid(self) -> UUID:
+        """Получение UUID"""
         return self.entity_id
 
     def add_component(self, component: Component) -> bool:
+        """Добавление компонента"""
         if type(component) in self.components:
             return False
         self.components[type(component)] = component
         return True
 
     def delete_component(self, component: Type[Component]) -> bool:
+        """Удаление компонента"""
         if component in self.components:
             del self.components[component]
             return True

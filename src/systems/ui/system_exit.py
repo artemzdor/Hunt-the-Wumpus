@@ -1,5 +1,5 @@
-from typing import Dict, Any, List
 from uuid import UUID
+from typing import Dict, Any, List
 
 from src.core.scene import Scene
 from src.systems.base import System

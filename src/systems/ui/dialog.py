@@ -21,6 +21,7 @@ class SystemDialog(System):
         pass
 
     def clear(self) -> None:
+        """Очистка Экрана"""
         if os.name == 'posix':
             subprocess.call("clear", shell=True)
         elif os.name in ('ce', 'nt', 'dos'):
@@ -29,6 +30,7 @@ class SystemDialog(System):
     def _get_dialogs(
             self, scene: Scene, component: ComponentDialog
     ) -> List[ComponentDialogEvent]:
+        """Получение диалогов"""
         renderings: List[ComponentDialogEvent] = list()
         for render_iter in component.renderings:
             render_iter: ComponentDialogRender
@@ -41,6 +43,7 @@ class SystemDialog(System):
         return renderings
 
     def _dialog(self, scene: Scene, entity_id: UUID) -> bool:
+        """Генерация диалогов"""
         if component := scene.get_component(entity_id, ComponentDialog):
             component: ComponentDialog
             component.dialog_events = self._get_dialogs(scene, component)
@@ -48,6 +51,7 @@ class SystemDialog(System):
         return False
 
     def _show_display(self, scene: Scene, entity_id: UUID) -> bool:
+        """Отрисовка диалогов"""
         system_display: Optional[SystemDisplay] = scene.get_system(SystemDisplay)
         system_input: Optional[SystemInput] = scene.get_system(SystemInput)
 
@@ -65,6 +69,7 @@ class SystemDialog(System):
         return True
 
     def dialog(self, scene: Scene, entity_id: UUID) -> None:
+        """Отрисовка диалогов"""
         dialog: bool = self._dialog(scene, entity_id)
         if dialog:
             display: bool = self._show_display(scene, entity_id)
