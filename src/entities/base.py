@@ -9,7 +9,7 @@ from src.components.base import Component
 class Entity:
     entity_id: UUID = field(default_factory=uuid4, metadata="Id Обьекта")
     components: Dict[Type[Component], Component] = field(
-        default_factory=list, metadata="Компоненты обьекта"
+        default_factory=dict, metadata="Компоненты обьекта"
     )
     tags: List[str] = field(default_factory=list, metadata="Теги")
 

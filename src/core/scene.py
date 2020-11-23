@@ -7,6 +7,8 @@ from src.entities.base import Entity
 from src.core.default import GameStatus
 from src.components.base import Component
 from src.entities.world.world import new_world
+from src.entities.ui.dialog import new_base_dialog
+
 
 
 @dataclass
@@ -45,7 +47,7 @@ class Scene:
     def add_system(self, system: System) -> bool:
         if type(system) in self.systems:
             return False
-        self.status[type(system)] = system
+        self.systems[type(system)] = system
         return True
 
     def delete_system(self, system: Type[System]) -> bool:
@@ -102,18 +104,40 @@ class Scene:
         if len(components) == len(components_map):
             return components_map
 
+    def set_status(self, status: GameStatus) -> None:
+        self.status = status
+
     def init(self) -> None:
         world: Entity = new_world(5, 5)
         self.add_entity(world)
         self.status = GameStatus.dialog
 
     def dialog(self) -> None:
-        input("Введите команду")
+        from src.systems.ui.dialog import SystemDialog
+        dialog: Optional[UUID] = self.get_resource("dialog")
+        if dialog is None:
+            raise RuntimeError("Не найден Entity для генерация экрана")
+        if system := self.get_system(SystemDialog):
+            system: SystemDialog
+            system.dialog(scene=self, entity_id=dialog)
+        else:
+            raise RuntimeError("Не найдена система для генерация экрана")
+
+    def new_world(self) -> None:
+        from src.systems.ui.dialog import SystemDialog
+        from src.systems.ui.system_exit import SystemExit
+        from src.systems.ui.system_input import SystemInput
+        from src.systems.ui.display import SystemDisplay
+
+        base_dialog: Entity = new_base_dialog()
+        self.add_entity(base_dialog)
+        self.add_resource("dialog", base_dialog.get_uuid())
+        self.add_system(SystemExit())
+        self.add_system(SystemInput())
+        self.add_system(SystemDialog())
+        self.add_system(SystemDisplay())
 
     def run(self) -> None:
-
-        dialog_base: System
-        dialog_current: UUID
 
         while True:
             if self.status == GameStatus.start:
