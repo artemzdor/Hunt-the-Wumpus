@@ -1,9 +1,7 @@
-# checklist
 from typing import List
-from uuid import UUID
 
-from src.components.base import Component
 from src.entities.base import Entity
+from src.components.base import Component
 from src.components.ui.dialog import (
     ComponentDialog,
     ComponentDialogRender

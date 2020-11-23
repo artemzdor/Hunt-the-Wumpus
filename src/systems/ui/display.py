@@ -1,8 +1,9 @@
-from uuid import UUID
-
 from src.core.scene import Scene
 from src.systems.base import System
-from src.components.ui.dialog import ComponentDialogEvent, ComponentDialog, ComponentDialogRender
+from src.components.ui.dialog import (
+    ComponentDialogEvent,
+    ComponentDialog
+)
 
 
 class SystemDisplay(System):

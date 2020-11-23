@@ -10,7 +10,6 @@ from src.entities.world.world import new_world
 from src.entities.ui.dialog import new_base_dialog
 
 
-
 @dataclass
 class Scene:
     entities: Dict[UUID, Entity] = field(
@@ -28,6 +27,9 @@ class Scene:
 
     def get_resource(self, key: str) -> Optional[Any]:
         return self.resources.get(key)
+
+    def set_resource(self, key: str, value: Any) -> None:
+        self.resources[key] = value
 
     def add_resource(self, key: str, value: Any) -> bool:
         if key in self.resources:
@@ -130,7 +132,9 @@ class Scene:
         from src.systems.ui.display import SystemDisplay
 
         base_dialog: Entity = new_base_dialog()
+        word: Entity = new_world(5, 5)
         self.add_entity(base_dialog)
+        self.add_entity(word)
         self.add_resource("dialog", base_dialog.get_uuid())
         self.add_system(SystemExit())
         self.add_system(SystemInput())

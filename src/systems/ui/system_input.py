@@ -3,7 +3,10 @@ from typing import List, Any, Dict, Optional
 from src.core.scene import Scene
 from src.systems.base import System
 from src.components.base import Component
-from src.components.ui.dialog import ComponentDialogEvent, ComponentDialog
+from src.components.ui.dialog import (
+    ComponentDialogEvent,
+    ComponentDialog
+)
 
 
 class SystemInput(System):
