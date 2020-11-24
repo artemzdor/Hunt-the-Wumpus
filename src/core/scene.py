@@ -128,6 +128,7 @@ class Scene:
             raise RuntimeError("Не найдена система для генерация экрана")
 
     def new_world(self) -> None:
+        # TODO вынести в отдельную фукнкцию/модуль
         from src.systems.ui.dialog import SystemDialog
         from src.systems.ui.system_exit import SystemExit
         from src.systems.ui.system_input import SystemInput
@@ -168,5 +169,6 @@ class Scene:
             elif self.status == GameStatus.runner:
                 for system in self.systems.values():
                     system.process(scene=self)
+                self.set_status(GameStatus.dialog)
             elif self.status == GameStatus.exit:
                 exit()

@@ -1,6 +1,7 @@
 from uuid import UUID
 from typing import Any, Dict, List, Optional, Tuple
 
+from src.core.default import GameStatus
 from src.core.scene import Scene
 from src.systems.base import System
 from src.components.base import Component
@@ -29,6 +30,7 @@ class SystemMove(SystemRender):
                 move_x=value[0],
                 move_y=value[1]
             )
+            scene.set_status(GameStatus.runner)
             return move
 
     def event(self, scene: Scene, system_event: System, event_type: str, entity_id: UUID,
@@ -43,10 +45,10 @@ class SystemMove(SystemRender):
         x: int = position.x
         y: int = position.y
         for speed in range(1, position.speed + 1):
-            points.append((x - speed, y, "a", "Влево идти"))
-            points.append((x + speed, y, "d", "Вправо идти"))
-            points.append((x, y - speed, "s", "Вниз идти"))
-            points.append((x, y + speed, "w", "Вверх идти"))
+            points.append((x - speed, y, "a", f"Влево идти:  (x={x - speed}, y={y})"))
+            points.append((x + speed, y, "d", f"Вправо идти: (x={x + speed}, y={y})"))
+            points.append((x, y - speed, "s", f"Вниз идти:   (x={x}, y={y - speed})"))
+            points.append((x, y + speed, "w", f"Вверх идти:  (x={x}, y={y + speed})"))
         return points
 
     def get_move_points(self, system_word: SystemWord,
