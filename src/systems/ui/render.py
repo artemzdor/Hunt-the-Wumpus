@@ -9,7 +9,7 @@ from src.components.ui.dialog import ComponentDialogEvent
 class SystemRender(System):
 
     def render(
-        self, scene: Scene, render_entity_id: UUID
+        self, scene: Scene, render_entity_id: UUID, next_dialog: UUID
     ) -> List[ComponentDialogEvent]:
         """Метод создания ComponentDialogEvent"""
         return []

@@ -1,9 +1,10 @@
-from typing import List, Optional, Tuple
 from uuid import UUID
+from typing import List, Optional, Tuple
 
 from src.core.scene import Scene
 from src.systems.base import System
 from src.entities.base import Entity
+from src.components.world.position import ComponentPosition
 from src.components.world.coordinates import ComponentCoordinates
 
 
@@ -80,13 +81,16 @@ class SystemWord(System):
             return True
         return False
 
-    def set_move(self, entity_id: UUID, x: int, y: int, move_x: int, move_y: int) -> bool:
+    def set_move(self, entity_id: UUID, component: ComponentPosition, move_x: int, move_y: int) -> bool:
         """Перемещение обьекта"""
+        x: int = component.x
+        y: int = component.y
+
         entity: Optional[Tuple[Entity, int]] = self.get_entity_point(
             entity_id=entity_id, x=x, y=y
         )
 
-        if entity is None or self.is_move(x=x, y=y) or self.is_move(x=move_x, y=move_y):
+        if entity is None or not self.is_move(x=x, y=y) or not self.is_move(x=move_x, y=move_y):
             return False
 
         delete: bool = self.delete_entity_point(x=x, y=y, index=entity[1])
@@ -95,6 +99,8 @@ class SystemWord(System):
             raise RuntimeError("Не удалось удалить обьект в point")
 
         add_point: bool = self.add_entity_point(x=move_x, y=move_y, entity=entity[0])
+        component.x = move_x
+        component.y = move_y
 
         # TODO: Передача события системе перемещиния
         return add_point

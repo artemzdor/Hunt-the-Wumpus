@@ -37,7 +37,9 @@ class SystemDialog(System):
             system: Optional[SystemRender] = scene.get_system(
                 render_iter.system_type
             )
-            for render in system.render(scene, render_iter.entity_id):
+            for render in system.render(
+                    scene=scene, render_entity_id=render_iter.entity_id, next_dialog=render_iter.next_dialog
+            ):
                 render: ComponentDialogEvent
                 renderings.append(render)
         return renderings

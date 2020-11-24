@@ -8,6 +8,8 @@ from src.core.default import GameStatus
 from src.components.base import Component
 from src.entities.world.world import new_world
 from src.entities.ui.dialog import new_base_dialog
+from src.entities.unit.player import create_player_entity
+from src.components.world.coordinates import ComponentCoordinates
 
 
 @dataclass
@@ -130,16 +132,31 @@ class Scene:
         from src.systems.ui.system_exit import SystemExit
         from src.systems.ui.system_input import SystemInput
         from src.systems.ui.display import SystemDisplay
+        from src.systems.word.move import SystemMove
+        from src.systems.word.word import SystemWord
 
         base_dialog: Entity = new_base_dialog()
         word: Entity = new_world(5, 5)
+        player: Entity = create_player_entity()
+
+        self.add_resource("dialog", player.get_uuid())
+        self.add_resource("player", player.get_uuid())
+
         self.add_entity(base_dialog)
         self.add_entity(word)
-        self.add_resource("dialog", base_dialog.get_uuid())
+        self.add_entity(player)
+
+        coordinates: ComponentCoordinates = self.get_component(
+            entity_id=word.get_uuid(), component=ComponentCoordinates
+        )
+        coordinates.word[0][0].append(player)
+
         self.add_system(SystemExit())
         self.add_system(SystemInput())
         self.add_system(SystemDialog())
         self.add_system(SystemDisplay())
+        self.add_system(SystemMove())
+        self.add_system(SystemWord(word_entity=word))
 
     def run(self) -> None:
 

@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import List, Any, Dict, Optional
 
 from src.core.scene import Scene
@@ -15,13 +16,13 @@ class SystemInput(System):
         pass
 
     def _event_system(
-            self, system: Optional[System], component: Optional[Component], value: Any,
+            self, system: Optional[System], component: Optional[Component], value: Any, entity_id: UUID,
             scene: Scene, value_name: str, kwargs: Dict[str, Any], event_type: str = "input"
     ) -> bool:
         """Передача события системе"""
         if system is None:
             return False
-        system.event(scene=scene, system_event=system, component=component,
+        system.event(scene=scene, system_event=system, component=component, entity_id=entity_id,
                      value=value, value_name=value_name, kwargs=kwargs, event_type=event_type)
 
     def display_input(self, scene: Scene, component_dialog: ComponentDialog) -> bool:
@@ -40,6 +41,7 @@ class SystemInput(System):
                 value: Any = component.value
                 value_name: str = component.value_name
                 kwargs: Dict[str, Any] = component.kwargs
+                entity_id: UUID = component.entity_id
 
                 event_result: bool = self._event_system(
                     system=system,
@@ -47,7 +49,8 @@ class SystemInput(System):
                     value=value,
                     value_name=value_name,
                     kwargs=kwargs,
-                    scene=scene
+                    scene=scene,
+                    entity_id=entity_id
                 )
                 return event_result
 

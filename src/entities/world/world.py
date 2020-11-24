@@ -31,7 +31,8 @@ def new_world(width: int, height: int) -> Entity:
         )
     }
     entity: Entity = Entity(
-        components=components
+        components=components,
+        tags=["word"]
     )
     return entity
 

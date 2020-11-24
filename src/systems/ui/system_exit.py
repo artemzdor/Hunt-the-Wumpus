@@ -13,11 +13,11 @@ class SystemExit(SystemRender):
     def process(self, scene: Scene):
         pass
 
-    def event(self, scene: Scene, system_event: System, event_type: str,
+    def event(self, scene: Scene, system_event: System, event_type: str, entity_id: UUID,
               component: Component, value: Any,  value_name: str, kwargs: Dict[str, Any]) -> None:
         exit()
 
-    def render(self, scene: Scene, render_entity_id: UUID) -> List[ComponentDialogEvent]:
+    def render(self, scene: Scene, render_entity_id: UUID, next_dialog: UUID) -> List[ComponentDialogEvent]:
         event_y: ComponentDialogEvent = ComponentDialogEvent(
             command="qq",
             display_info="Выход",
@@ -27,7 +27,7 @@ class SystemExit(SystemRender):
             value_name="",
             entity_id=render_entity_id,
             component_type=type(None),
-            next_dialog=render_entity_id
+            next_dialog=next_dialog,
         )
         scene.set_resource("dialog", render_entity_id)
         return [event_y]
