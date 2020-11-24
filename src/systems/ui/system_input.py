@@ -27,7 +27,10 @@ class SystemInput(System):
 
     def display_input(self, scene: Scene, component_dialog: ComponentDialog) -> bool:
         """Получени ввода"""
-        input_text: str = input("Введите вариант: ").strip()
+        try:
+            input_text: str = input("Введите вариант: ").strip()
+        except UnicodeDecodeError:
+            return False
 
         events: List[ComponentDialogEvent]
 

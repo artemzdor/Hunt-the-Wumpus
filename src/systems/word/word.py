@@ -36,8 +36,8 @@ class SystemWord(System):
 
     def is_boundary(self, x: int, y: int) -> bool:
         """Проверка на границы мира"""
-        if 0 <= x <= self.get_width():
-            if 0 <= y <= self.get_height():
+        if 0 <= x < self.get_width():
+            if 0 <= y < self.get_height():
                 return True
 
     def is_filter(self, x: int, y: int) -> bool:
