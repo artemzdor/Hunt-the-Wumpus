@@ -1,24 +1,32 @@
 import os
 import subprocess
 from uuid import UUID
-from typing import List, Optional
+from typing import List, Optional, Any, Dict
 
 from src.core.scene import Scene
 from src.systems.base import System
+from src.core.default import GameStatus
+from src.components.base import Component
 from src.systems.ui.render import SystemRender
 from src.systems.ui.display import SystemDisplay
+from src.systems.ui.system_input import SystemInput
 from src.components.ui.dialog import (
     ComponentDialog,
     ComponentDialogEvent,
     ComponentDialogRender
 )
-from src.systems.ui.system_input import SystemInput
 
 
 class SystemDialog(System):
 
     def process(self, scene: Scene):
         pass
+
+    def event(self, scene: "Scene", system_event: "System", event_type: str, entity_id: UUID,
+              component: Component, value: Any,  value_name: str, kwargs: Dict[str, Any]) -> None:
+        if player := scene.get_resource("player"):
+            scene.set_resource("dialog", player)
+            scene.set_status(GameStatus.dialog)
 
     def clear(self) -> None:
         """Очистка Экрана"""

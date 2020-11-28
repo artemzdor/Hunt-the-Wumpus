@@ -8,7 +8,6 @@ from src.core.default import GameStatus
 from src.components.base import Component
 from src.entities.world.world import new_world
 from src.entities.ui.dialog import new_base_dialog
-from src.entities.unit.player import create_player_entity
 from src.components.world.coordinates import ComponentCoordinates
 
 
@@ -129,17 +128,20 @@ class Scene:
 
     def new_world(self) -> None:
         # TODO вынести в отдельную фукнкцию/модуль
-        from src.systems.ui.dialog import SystemDialog
-        from src.systems.ui.system_exit import SystemExit
-        from src.systems.ui.system_input import SystemInput
-        from src.systems.ui.display import SystemDisplay
+        from src.systems.ui.info import SystemInfo
+        from src.systems.unit.item import SystemItem
         from src.systems.word.move import SystemMove
         from src.systems.word.word import SystemWord
-        from src.systems.ui.info import SystemInfo
+        from src.systems.ui.dialog import SystemDialog
+        from src.systems.ui.display import SystemDisplay
+        from src.systems.ui.system_exit import SystemExit
+        from src.systems.ui.system_input import SystemInput
+        from src.systems.unit.inventory import SystemInventory
+        from src.entities.unit.player import create_player_entity
 
         base_dialog: Entity = new_base_dialog()
         word: Entity = new_world(5, 5)
-        player: Entity = create_player_entity()
+        player: Entity = create_player_entity(scene=self)
 
         self.add_resource("dialog", player.get_uuid())
         self.add_resource("player", player.get_uuid())
@@ -159,6 +161,8 @@ class Scene:
         self.add_system(SystemDisplay())
         self.add_system(SystemMove())
         self.add_system(SystemWord(word_entity=word))
+        self.add_system(SystemInventory())
+        self.add_system(SystemItem())
 
     def run(self) -> None:
 
