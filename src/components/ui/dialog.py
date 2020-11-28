@@ -11,6 +11,9 @@ class ComponentDialogEvent(Component):
     command: str = field(
         default=..., metadata="Команды взаимодействия"
     )
+    info: bool = field(
+        default=False, metadata="признак информации"
+    )
     display_info: str = field(
         default=..., metadata="Описание команды"
     )

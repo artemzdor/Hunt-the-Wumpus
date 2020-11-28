@@ -135,6 +135,7 @@ class Scene:
         from src.systems.ui.display import SystemDisplay
         from src.systems.word.move import SystemMove
         from src.systems.word.word import SystemWord
+        from src.systems.ui.info import SystemInfo
 
         base_dialog: Entity = new_base_dialog()
         word: Entity = new_world(5, 5)
@@ -151,7 +152,7 @@ class Scene:
             entity_id=word.get_uuid(), component=ComponentCoordinates
         )
         coordinates.word[0][0].append(player)
-
+        self.add_system(SystemInfo(player=player))
         self.add_system(SystemExit())
         self.add_system(SystemInput())
         self.add_system(SystemDialog())

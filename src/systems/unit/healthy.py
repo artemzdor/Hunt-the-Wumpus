@@ -1,5 +1,5 @@
-from typing import Tuple, Type
 from uuid import UUID
+from typing import Tuple, Type
 
 from src.core.scene import Scene
 from src.systems.base import System

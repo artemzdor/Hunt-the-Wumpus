@@ -13,10 +13,13 @@ class SystemDisplay(System):
 
     def _get_text(self, component: ComponentDialogEvent) -> str:
         """Получение текста для отрисовки"""
+        if component.info:
+            return f"{component.display_info}\n{'-' * len(component.display_info)}"
+
         if component.command and component.display_info:
-            return f"{component.command} <- {component.display_info}"
-        else:
-            return f"{component.display_info}"
+            return f"{component.command:<4} <- {component.display_info}"
+
+        return f"{component.display_info}"
 
     def _display_print(self, text: str) -> None:
         """Отрисовка Диалога"""
