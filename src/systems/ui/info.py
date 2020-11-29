@@ -29,7 +29,7 @@ class SystemInfo(SystemRender):
         """Информация о текущем состояние жизней"""
         if health := self.player.get_component(ComponentUnitHealthy):
             health: ComponentUnitHealthy
-            return f"Hp: {health.healthy}"
+            return f"Hp: {health.healthy}/{health.healthy_max}"
 
     def get_position(self, scene: Scene) -> Optional[str]:
         """Информация о текущей позиции персонажа"""

@@ -1,5 +1,5 @@
-from typing import List
 from uuid import UUID
+from typing import List
 
 from src.core.scene import Scene
 from src.entities.base import Entity
