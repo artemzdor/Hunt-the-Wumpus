@@ -19,7 +19,7 @@ class SystemInventory(SystemRender):
     def event(self, scene: Scene, system_event: System, event_type: str, entity_id: UUID,
               component: Component, value: Any, value_name: str, kwargs: Dict[str, Any]) -> None:
         component: ComponentInventory
-        scene.set_resource("dialog", component.entity_item)
+        scene.set_resource("dialog", component.entity_items)
         scene.set_status(GameStatus.dialog)
 
     def render(self, scene: Scene, render_entity_id: UUID, next_dialog: UUID) -> List[ComponentDialogEvent]:

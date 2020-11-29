@@ -11,7 +11,7 @@ from src.components.ui.dialog import (
 )
 
 
-def new_entity_item(scene: Scene, player: Entity) -> UUID:
+def new_entity_items(scene: Scene, player: Entity) -> UUID:
     entity: Entity = Entity(
         tags=["Items"]
     )

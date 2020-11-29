@@ -11,7 +11,9 @@ from src.components.ui.dialog import (
     ComponentDialogRender,
     ComponentDialog
 )
-from src.entities.unit.item import new_entity_item
+
+from src.entities.items.potion import create_item_potion
+from src.entities.unit.items import new_entity_items
 
 
 def create_player_dialogs(entity: Entity) -> List[ComponentDialogRender]:
@@ -60,12 +62,17 @@ def create_player_entity(scene: Scene) -> Entity:
         renderings=renderings
     )
 
-    entity_item: UUID = new_entity_item(scene=scene, player=entity)
+    entity_items: UUID = new_entity_items(scene=scene, player=entity)
+    entity_potion: Entity = create_item_potion(scene=scene)
+    items: List[UUID] = [entity_potion.get_uuid()]
 
     components: List[Component] = [
         ComponentUnitHealthy(healthy=50, healthy_max=100, revival=0),
         ComponentPosition(x=0, y=0, speed=1),
-        ComponentInventory(entity_item=entity_item, next_dialog=entity.get_uuid()),
+        ComponentInventory(
+            items=items,
+            entity_items=entity_items,
+            next_dialog=entity.get_uuid()),
         dialog
     ]
 

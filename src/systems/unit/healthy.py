@@ -18,10 +18,8 @@ class SystemUnitHealthy(System):
         """Добовление жизней"""
         component.healthy += healthy
 
-        healthy_max: int = component.healthy_max
-
-        if healthy_max != component.healthy:
-            component.healthy %= healthy_max + 1
+        if component.healthy > component.healthy_max:
+            component.healthy = component.healthy_max
 
     def _deprive_healthy(self, component_healthy: ComponentUnitHealthy,
                          component_game_status: Component, healthy: int) -> None:
@@ -57,7 +55,7 @@ class SystemUnitHealthy(System):
             self._deprive_healthy(
                 component_healthy=components[ComponentUnitHealthy],
                 healthy=healthy,
-                component_game_status=Component(), #  TODO: Компонент убийства юнита
+                component_game_status=Component(),  # TODO: Компонент убийства юнита
             )
             return True
         return False

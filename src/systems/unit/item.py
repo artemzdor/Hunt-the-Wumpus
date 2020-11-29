@@ -34,6 +34,18 @@ class SystemItem(SystemRender):
 
         renders: List[ComponentDialogEvent] = list()
 
+        q_event: ComponentDialogEvent = ComponentDialogEvent(
+            command=f"q",
+            display_info="Вернутся в меню",
+            system_type=SystemDialog,
+            value=None,
+            value_name="",
+            entity_id=render_entity_id,
+            component_type=ComponentDialog,
+            next_dialog=render_entity_id,
+            info=False
+        )
+
         if len(inventory.items) == 0:
             info_event: ComponentDialogEvent = ComponentDialogEvent(
                 command=f"",
@@ -46,17 +58,7 @@ class SystemItem(SystemRender):
                 next_dialog=render_entity_id,
                 info=True
             )
-            q_event: ComponentDialogEvent = ComponentDialogEvent(
-                command=f"q",
-                display_info="Вернутся в меню",
-                system_type=SystemDialog,
-                value=None,
-                value_name="",
-                entity_id=render_entity_id,
-                component_type=ComponentDialog,
-                next_dialog=render_entity_id,
-                info=False
-            )
+
             return [info_event, q_event]
 
         for index, item_uuid in enumerate(inventory.items):
@@ -81,5 +83,6 @@ class SystemItem(SystemRender):
                 next_dialog=next_dialog,
             )
             renders.append(event)
+        renders.append(q_event)
         scene.set_resource("dialog", render_entity_id)
         return renders

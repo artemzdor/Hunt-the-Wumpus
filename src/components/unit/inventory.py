@@ -10,7 +10,7 @@ class ComponentInventory(Component):
     items: List[UUID] = field(
         default_factory=list, metadata="Список предметов"
     )
-    entity_item: UUID = field(
+    entity_items: UUID = field(
         default=..., metadata="Id для рендеринга списка предметов"
     )
     next_dialog: UUID = field(

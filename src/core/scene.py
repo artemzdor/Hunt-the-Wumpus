@@ -137,7 +137,9 @@ class Scene:
         from src.systems.ui.system_exit import SystemExit
         from src.systems.ui.system_input import SystemInput
         from src.systems.unit.inventory import SystemInventory
+        from src.systems.unit.healthy import SystemUnitHealthy
         from src.entities.unit.player import create_player_entity
+        from src.systems.items.potion import SystemPotion, SystemPotionY
 
         base_dialog: Entity = new_base_dialog()
         word: Entity = new_world(5, 5)
@@ -163,6 +165,9 @@ class Scene:
         self.add_system(SystemWord(word_entity=word))
         self.add_system(SystemInventory())
         self.add_system(SystemItem())
+        self.add_system(SystemPotion())
+        self.add_system(SystemPotionY())
+        self.add_system(SystemUnitHealthy())
 
     def run(self) -> None:
 
